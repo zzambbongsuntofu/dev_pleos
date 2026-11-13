@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature
+        android:name="android.hardware.type.automotive"
+        android:required="true" />
+
+    <!-- Speech SDK manifests merge INTERNET. This prototype calls ON_DEVICE mode,
+         which the SpeechToText and TextToSpeech guides say does not need a network
+         connection. ACCESS_NETWORK_STATE is only used to show a disconnect notice. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- The Pleos speech SDK refuses to start without these. Both are install-time
+         (normal) permissions defined by the Pleos speech service on the device.
+         Seen on the Pleos Connect v2.1.0 emulator, 2026-11-11. -->
+    <uses-permission android:name="pleos.car.permission.TTS_SERVICE" />
+    <uses-permission android:name="pleos.car.permission.STT_SERVICE" />
+    <!-- Blinker is a light. Brake pedal is a drive signal. Read only. -->
+    <uses-permission android:name="pleos.car.permission.CAR_LIGHTS" />
+    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />
+    <uses-permission android:name="pleos.car.permission.CAR_WINDOWS" />
+    <uses-permission android:name="pleos.car.permission.CAR_SAFETY" />
+    <!-- Vehicle 2.3.2 annotates registerTelltales with this one, not CAR_SAFETY.
+         Without it the emulator threw "registerTelltales need Permission", 2026-11-13.
+         Read only. The permission guide does not describe the PRIVATE_ prefix. -->
+    <uses-permission android:name="pleos.car.permission.PRIVATE_CAR_SAFETY" />
+    <uses-permission android:name="pleos.car.permission.CAR_SEATS" />
+    <uses-permission android:name="pleos.car.permission.READ_CAR_STEERING" />
+    <uses-permission android:name="pleos.car.permission.CAR_SPEED" />
+    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE" />
+
+    <application
+        android:name=".BlindDriveApp"
+        android:allowBackup="false"
+        android:appCategory="audio"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BlindDrive">
+        <!-- Music/Audio guide checked 2026-11-05: this metadata is what puts the
+             app in the Pleos launcher. It is not a driving-permission grant. -->
+        <meta-data
+            android:name="androidx.car.app.launchable"
+            android:value="true" />
+        <!-- distractionOptimized is omitted on purpose.
+             Driving Restriction Policy checked 2026-11-05: without that declaration,
+             the app is not available while driving. -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="uiMode|screenSize|smallestScreenSize|orientation"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".media.RadioBrowserService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

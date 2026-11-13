@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.BlindDrive" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">#FFF9EB</item>
+        <item name="android:statusBarColor">#FFF9EB</item>
+        <item name="android:navigationBarColor">#FFF9EB</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>
