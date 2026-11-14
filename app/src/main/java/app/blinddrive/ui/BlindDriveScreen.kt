@@ -132,7 +132,7 @@ fun BlindDriveScreen(viewModel: BlindDriveViewModel) {
     ) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             Text(
-                text = "초보운전",
+                text = "다정이",
                 color = Ink.copy(alpha = 0.62f),
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
